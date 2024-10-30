@@ -1,0 +1,114 @@
+services:
+  base:
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BASE_IMAGE: python:3.11-slim
+        COMFYUI_SHA: 79547efb65ebb41a964ce7686170c4e6c3641eb2
+        PYTORCH_VERSION: 2.4.0
+        WORKDIR: /workspace
+    image: yavzan/comfyui-cogx:base
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
+    
+    # command: /bin/bash
+    # tty: true
+    # stdin_open: true
+    ports:
+      - 8188:8188 # comfyui (eski port)
+      - 8888:8888 # jupyter server
+
+  models:
+    build:
+      context: . # `Dockerfile.models` dosyanızın bulunduğu dizin
+      dockerfile: Dockerfile.Models
+      args:
+        HUGGINGFACE_ACCESS_TOKEN: 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
+        WORKDIR: /workspace
+    image: yavzan/comfyui-cogx:models
+    runtime: nvidia  # GPU kullanımı
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - HUGGINGFACE_ACCESS_TOKEN=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
+    volumes:
+      - ./models:/workspace/ComfyUI/models # Model dosyalarını comfyui servisine mount et
+    command: bash ./start.sh
+
+  models2:
+    build:
+      context: . # `Dockerfile.models` dosyanızın bulunduğu dizin
+      dockerfile: Dockerfile.Models2
+      args:
+        HUGGINGFACE_ACCESS_TOKEN: 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
+        WORKDIR: /workspace
+    image: yavzan/comfyui-cogx:models2
+    runtime: nvidia  # GPU kullanımı
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - HUGGINGFACE_ACCESS_TOKEN=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
+    volumes:
+      - ./models:/workspace/ComfyUI/models # Model dosyalarını comfyui servisine mount et
+    command: bash ./start.sh
+
+
+  add:
+    build:
+      context: .
+      dockerfile: Dockerfile.Add
+      args:
+        HUGGINGFACE_ACCESS_TOKEN: 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
+        WORKDIR: /workspace
+      
+    image: yavzan/comfyui-cogx:add
+    volumes:
+      # - ./test_input.json:/workspace/ComfyUI/test_input.json # test_input.json'ı doğru konuma mount edin
+      - ./output:/workspace/ComfyUI/output
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    ports:
+      - 8188:8188 # comfyui (eski port)
+      - 8888:8888 # jupyter server
+    environment:
+      - HUGGINGFACE_ACCESS_TOKEN=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
+    command: bash ./start.sh
+
+  nodes:
+    build:
+      context: .
+      dockerfile: Dockerfile.Nodes
+      args:
+        HUGGINGFACE_ACCESS_TOKEN: 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
+        WORKDIR: /workspace
+    image: yavzan/comfyui-cogx:nodes
+    environment:
+      - HUGGINGFACE_ACCESS_TOKEN=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
+
+

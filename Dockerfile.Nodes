@@ -1,0 +1,21 @@
+# yavzan/comfyui:latest taban imajını kullan
+FROM yavzan/comfyui-cogx:base AS base
+
+ARG HUGGINGFACE_ACCESS_TOKEN
+ARG WORKDIR
+# Çalışma dizini
+WORKDIR ${WORKDIR}/ComfyUI
+
+RUN git -C ./custom_nodes clone --depth 1 https://github.com/ltdrdata/ComfyUI-Manager.git && \
+    git -C ./custom_nodes clone --depth 1 https://github.com/mav-rik/facerestore_cf.git && \
+    git -C ./custom_nodes clone --depth 1 https://github.com/Fannovel16/ComfyUI-Frame-Interpolation.git && \
+    git -C ./custom_nodes clone --depth 1 https://github.com/kijai/ComfyUI-KJNodes.git && \
+    git -C ./custom_nodes clone --depth 1 https://github.com/kijai/ComfyUI-CogVideoXWrapper.git && \
+    git -C ./custom_nodes clone --depth 1 https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite
+
+    
+    
+COPY src/* .
+RUN chmod +x ./install-nodes-dependencies.sh
+RUN --mount=type=cache,target=/root/.cache/pip \
+    ./install-nodes-dependencies.sh

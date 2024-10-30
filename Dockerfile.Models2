@@ -1,0 +1,33 @@
+# yavzan/comfyui:latest taban imajını kullan
+FROM yavzan/comfyui-cogx:models AS base
+
+ARG HUGGINGFACE_ACCESS_TOKEN
+ARG WORKDIR
+# Çalışma dizini
+WORKDIR ${WORKDIR}/ComfyUI
+# modelsmodels/CogVideo klasör yapısını oluştur
+# RUN mkdir -p models/CogVideo
+# RUN mkdir -p models/CogVideo/CogVideoX-5b
+# RUN mkdir -p models/CogVideo/CogVideoX-5b-I2V
+
+#
+
+RUN pip install torch huggingface_hub
+
+
+RUN python3 -c "from huggingface_hub import snapshot_download; snapshot_download(repo_id='THUDM/CogVideoX-5b-I2V', local_dir='models/CogVideo/CogVideoX-5b-I2V')"
+# RUN python3 -c "from huggingface_hub import snapshot_download; snapshot_download(repo_id='THUDM/CogVideoX-5b', local_dir='models/CogVideo/CogVideoX-5b')"
+# RUN wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O models/clip/t5xxl_fp8_e4m3fn.safetensors https://huggingface.co/mcmonkey/google_t5-v1_1-xxl_encoderonly/resolve/main/t5xxl_fp8_e4m3fn.safetensors
+
+
+EXPOSE 8188 8888
+
+CMD ["bash", "./start.sh"]
+
+# RUN mkdir -p models/pyramidflow/pyramid-flow-sd3/causal_video_vae && \
+#     mkdir -p models/pyramidflow/pyramid-flow-sd3/diffusion_transformer_384p && \
+
+#     RUN wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O models/pyramidflow/pyramid-flow-sd3/causal_video_vae/diffusion_pytorch_model.safetensors https://huggingface.co/rain1011/pyramid-flow-sd3/resolve/main/causal_video_vae/diffusion_pytorch_model.safetensors && \
+#     wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O models/pyramidflow/pyramid-flow-sd3/causal_video_vae/config.json https://huggingface.co/rain1011/pyramid-flow-sd3/resolve/main/causal_video_vae/config.json && \
+#     wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O models/pyramidflow/pyramid-flow-sd3/diffusion_transformer_384p/diffusion_pytorch_model.safetensors https://huggingface.co/rain1011/pyramid-flow-sd3/resolve/main/diffusion_transformer_384p/diffusion_pytorch_model.safetensors && \
+   

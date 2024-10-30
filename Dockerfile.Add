@@ -1,0 +1,27 @@
+# yavzan/comfyui:latest taban imajını kullan
+FROM yavzan/comfyui-cogx:models AS base
+
+ARG HUGGINGFACE_ACCESS_TOKEN
+ARG WORKDIR
+
+# Çalışma dizini
+WORKDIR ${WORKDIR}/ComfyUI
+
+# `test_input.json` dosyasını doğru konuma kopyala
+COPY src/* .
+COPY main.ipynb .
+COPY test_input.json .
+RUN mkdir -p ./custom_nodes/ComfyUI-Frame-Interpolation/ckpts/film && \
+    wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O ./custom_nodes/ComfyUI-Frame-Interpolation/ckpts/film/film_net_fp16.pt \
+    https://huggingface.co/nguu/film-pytorch/resolve/887b2c42bebcb323baf6c3b6d59304135699b575/film_net_fp16.pt && \
+    wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O ./custom_nodes/ComfyUI-Frame-Interpolation/ckpts/film/film_net_fp32.pt \
+    https://huggingface.co/nguu/film-pytorch/resolve/887b2c42bebcb323baf6c3b6d59304135699b575/film_net_fp32.pt
+
+RUN chmod +x ./install-nodes-dependencies.sh
+RUN --mount=type=cache,target=/root/.cache/pip \
+    ./install-nodes-dependencies.sh
+
+
+EXPOSE 8188 8888
+
+CMD ["bash", "./start.sh"]

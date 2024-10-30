@@ -1,0 +1,18 @@
+runpod_worker_comfy:
+  base_path: ./
+  checkpoints: models/checkpoints/
+  clip: models/clip/
+  clip_vision: models/clip_vision/
+  configs: models/configs/
+  controlnet: models/controlnet/
+  embeddings: models/embeddings/
+  loras: models/loras/
+  upscale_models: models/upscale_models/
+  vae: models/vae/
+  unet: models/unet/
+  llm_gguf: models/llm_gguf/
+  custom_nodes: custom_nodes/
+  facedetection: models/facedetection/
+  facerestore_models: models/facerestore_models/
+  insightface: models/insightface/
+  reactor: models/reactor/
