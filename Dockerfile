@@ -28,19 +28,13 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 RUN pip3 install runpod requests
 
-# RUN git -C ./custom_nodes clone --depth 1 https://github.com/ltdrdata/ComfyUI-Manager.git && \
-#     git -C ./custom_nodes clone --depth 1 https://github.com/mav-rik/facerestore_cf.git && \
-#     git -C ./custom_nodes clone --depth 1 https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git --recursive
     
 COPY src/* .
-# RUN chmod +x ./install-nodes-dependencies.sh
-# RUN --mount=type=cache,target=/root/.cache/pip \
-#     ./install-nodes-dependencies.sh
-
 
 RUN chmod +x ./setup-ssh.sh
-# RUN chmod +x ./start.sh
 
 RUN ./setup-ssh.sh
+
+EXPOSE 8188 8888
 
 CMD ["/workspace/ComfyUI/start.sh"]
