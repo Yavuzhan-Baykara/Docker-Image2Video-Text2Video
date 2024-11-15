@@ -9,7 +9,7 @@ services:
         COMFYUI_SHA: e7d47827364e628f1e89c7392ec00f9b78f6bca6
         PYTORCH_VERSION: 2.4.0
         WORKDIR: /workspace
-    image: yavzan/comfyui-flux2:base
+    image: yavzan/comfyui-mochi:base
     deploy:
       resources:
         reservations:
@@ -30,7 +30,7 @@ services:
       args:
         HUGGINGFACE_ACCESS_TOKEN: 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
         WORKDIR: /workspace
-    image: yavzan/comfyui-flux2:models
+    image: yavzan/comfyui-mochi:models
     runtime: nvidia
     deploy:
       resources:
@@ -59,7 +59,7 @@ services:
       args:
         HUGGINGFACE_ACCESS_TOKEN: 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
         WORKDIR: /workspace
-    image: yavzan/comfyui-flux:models2
+    image: yavzan/comfyui-mochi:models2
     runtime: nvidia
     deploy:
       resources:
@@ -88,7 +88,7 @@ services:
       args:
         HUGGINGFACE_ACCESS_TOKEN: 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
         WORKDIR: /workspace
-    image: yavzan/comfyui-flux:add
+    image: yavzan/comfyui-mochi:add
     volumes:
       - ./output:/workspace/ComfyUI/output
     deploy:
@@ -114,7 +114,7 @@ services:
       args:
         HUGGINGFACE_ACCESS_TOKEN: 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
         WORKDIR: /workspace
-    image: yavzan/comfyui-flux2:nodes
+    image: yavzan/comfyui-mochi:nodes
     environment:
       - HUGGINGFACE_ACCESS_TOKEN=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
     ports:
