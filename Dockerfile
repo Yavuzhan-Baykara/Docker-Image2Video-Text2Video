@@ -1,6 +1,8 @@
 ARG BASE_IMAGE
 
 FROM debian:12-slim as base-model-downloader
+FROM nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04 as base
+
 RUN apt update && apt install aria2 -y
 FROM ${BASE_IMAGE} as final
 
@@ -8,6 +10,10 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PYTHONUNBUFFERED=1 \
     NVIDIA_VISIBLE_DEVICES=all \
     NVIDIA_DRIVER_CAPABILITIES=all
+
+
+RUN pip install comfy-cli
+RUN /usr/bin/yes | comfy --workspace /ComfyUI install --cuda-version 11.8 --nvidia --version 0.2.7
 
 ARG WORKDIR
 WORKDIR ${WORKDIR}
@@ -28,7 +34,6 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 RUN pip3 install runpod requests
 
-    
 COPY src/* .
 
 RUN chmod +x ./setup-ssh.sh
