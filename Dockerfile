@@ -12,13 +12,13 @@ ENV DEBIAN_FRONTEND=noninteractive \
     NVIDIA_DRIVER_CAPABILITIES=all
 
 
-RUN pip install comfy-cli
-RUN /usr/bin/yes | comfy --workspace /ComfyUI install --cuda-version 11.8 --nvidia --version 0.2.7
-
 ARG WORKDIR
 WORKDIR ${WORKDIR}
 
 RUN apt update -y && apt install git wget ffmpeg -y
+
+RUN pip install comfy-cli
+RUN /usr/bin/yes | comfy --workspace /ComfyUI install --cuda-version 11.8 --nvidia --version 0.2.7
 
 ARG COMFYUI_SHA
 RUN git clone https://github.com/comfyanonymous/ComfyUI
