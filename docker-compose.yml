@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
       args:
         BASE_IMAGE: python:3.11-slim
-        COMFYUI_SHA: e7d47827364e628f1e89c7392ec00f9b78f6bca6
+        COMFYUI_SHA: 6e8cdcd3cb542ba9eb5a5e5a420eff06f59dd268
         PYTORCH_VERSION: 2.4.0
         WORKDIR: /workspace
     image: yavzan/comfyui-image2image:base

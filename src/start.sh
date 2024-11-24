@@ -38,13 +38,13 @@ export LD_PRELOAD="${TCMALLOC}"
 # Start ComfyUI and RunPod Handler based on the SERVE_API_LOCALLY variable
 if [ "$SERVE_API_LOCALLY" == "true" ]; then
     echo "runpod-worker-comfy: Starting ComfyUI"
-    python3 main.py --disable-auto-launch --disable-metadata --listen &
+    python3 main.py --disable-auto-launch --disable-metadata --listen 0.0.0.0 &
 
     echo "runpod-worker-comfy: Starting RunPod Handler"
     python3 -u rp_handler.py --rp_serve_api --rp_api_host=0.0.0.0
 else
     echo "runpod-worker-comfy: Starting ComfyUI"
-    python3 main.py --disable-auto-launch --disable-metadata --listen &
+    python3 main.py --disable-auto-launch --disable-metadata --listen 0.0.0.0 &
 
     echo "runpod-worker-comfy: Starting RunPod Handler"
     python3 -u rp_handler.py
