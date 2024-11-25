@@ -30,7 +30,7 @@ services:
       args:
         HUGGINGFACE_ACCESS_TOKEN: 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
         WORKDIR: /workspace
-    image: yavzan/comfyui-image2image:models
+    image: yavzan/comfyui-upscalev11:models
     runtime: nvidia
     deploy:
       resources:
@@ -59,7 +59,7 @@ services:
       args:
         HUGGINGFACE_ACCESS_TOKEN: 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
         WORKDIR: /workspace
-    image: yavzan/comfyui-image2image:models2
+    image: yavzan/comfyui-upscalev11:models2
     runtime: nvidia
     deploy:
       resources:
@@ -88,7 +88,7 @@ services:
       args:
         HUGGINGFACE_ACCESS_TOKEN: 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
         WORKDIR: /workspace
-    image: yavzan/comfyui-image2image:add
+    image: yavzan/comfyui-upscalev11:add
     volumes:
       - ./output:/workspace/ComfyUI/output
     deploy:
@@ -114,7 +114,7 @@ services:
       args:
         HUGGINGFACE_ACCESS_TOKEN: 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
         WORKDIR: /workspace
-    image: yavzan/comfyui-image2image:nodes
+    image: yavzan/comfyui-upscalev11:nodes
     environment:
       - HUGGINGFACE_ACCESS_TOKEN=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
     ports:

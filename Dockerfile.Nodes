@@ -10,8 +10,9 @@ RUN git -C ./custom_nodes clone --depth 1 https://github.com/ltdrdata/ComfyUI-Ma
     git -C ./custom_nodes clone --depth 1 https://github.com/kijai/ComfyUI-MochiWrapper.git && \
     git -C ./custom_nodes clone --depth 1 https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git && \
     git -C ./custom_nodes clone --depth 1 https://github.com/kijai/ComfyUI-KJNodes.git && \
-    git -C ./custom_nodes clone --depth 1 https://github.com/Fannovel16/comfyui_controlnet_aux.git && \
-    git -C ./custom_nodes clone --depth 1 https://github.com/cubiq/ComfyUI_essentials.git
+    git -C ./custom_nodes clone --depth 1 https://github.com/kijai/ComfyUI-SUPIR.git && \
+    git -C ./custom_nodes clone --depth 1 https://github.com/cubiq/ComfyUI_essentials && \
+    git -C ./custom_nodes clone --depth 1 https://github.com/rgthree/rgthree-comfy.git
 
 RUN chmod +x ./install-nodes-dependencies.sh
 RUN --mount=type=cache,target=/root/.cache/pip \

@@ -1,18 +1,15 @@
-FROM yavzan/comfyui-image2image:nodes AS base
+FROM yavzan/comfyui-upscalev11:nodes AS base
 
 ARG HUGGINGFACE_ACCESS_TOKEN
 ARG WORKDIR
 WORKDIR ${WORKDIR}/ComfyUI
 
-RUN mkdir -p models/controlnet/FLUX.1
+RUN mkdir -p models/checkpoints/SUPIR
 RUN pip install torch huggingface_hub
 
-RUN wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O models/vae/ae.safetensors https://huggingface.co/black-forest-labs/FLUX.1-dev/resolve/main/ae.safetensors
-RUN wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O models/controlnet/FLUX.1/flux_shakker_labs_union_pro-fp8_e4m3fn.safetensors https://huggingface.co/Kijai/flux-fp8/resolve/main/flux_shakker_labs_union_pro-fp8_e4m3fn.safetensors
-RUN wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O models/unet/flux1-dev.safetensors https://huggingface.co/black-forest-labs/FLUX.1-dev/resolve/main/flux1-dev.safetensors
+RUN wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O models/checkpoints/juggernautXL_v9Rdphoto2Lightning.safetensors https://huggingface.co/xRikishi/xRikishi_new/resolve/main/juggernautXL_v9Rdphoto2Lightning.safetensors
+RUN wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O models/checkpoints/SUPIR/SUPIR-v0Q.ckpt https://huggingface.co/camenduru/SUPIR/resolve/main/SUPIR-v0Q.ckpt
 
-RUN wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O models/clip/t5xxl_fp16_e4m3fn.safetensors https://huggingface.co/mcmonkey/google_t5-v1_1-xxl_encoderonly/resolve/main/model.safetensors
-RUN wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O models/clip/clip_l.safetensors https://huggingface.co/comfyanonymous/flux_text_encoders/resolve/main/clip_l.safetensors
 
 COPY main.ipynb .
 EXPOSE 8188 8888
