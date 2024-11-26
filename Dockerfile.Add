@@ -7,7 +7,7 @@ ARG WORKDIR
 # Çalışma dizini
 WORKDIR ${WORKDIR}/ComfyUI
 
-RUN wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O models/diffusion_models/mochi/mochi_preview_dit_bf16.safetensors https://huggingface.co/Kijai/Mochi_preview_comfy/resolve/main/mochi_preview_dit_bf16.safetensors
+# RUN wget --header="Authorization: Bearer ${HUGGINGFACE_ACCESS_TOKEN}" -O models/diffusion_models/mochi/mochi_preview_dit_bf16.safetensors https://huggingface.co/Kijai/Mochi_preview_comfy/resolve/main/mochi_preview_dit_bf16.safetensors
 
 # `test_input.json` dosyasını doğru konuma kopyala
 # COPY src/* .
